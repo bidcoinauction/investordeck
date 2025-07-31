@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WiseOne Presentation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-bg: #0D0B14;
+            --color-surface: #13111B;
+            --color-card: #1A1823;
+            --color-border: #2C2A37;
+            --color-text-primary: #FFFFFF;
+            --color-text-secondary: #A0A0A0;
+            --color-purple-light: #C879FF;
+            --color-purple-dark: #9B51E0;
+        }
+        /* Main body and scaling wrapper */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-bg);
+            color: var(--color-text-primary);
+            overflow: hidden; /* Prevents scrollbars on the page */
+        }
+        #presentation-wrapper {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #presentation-container {
+            width: 1280px; /* Native resolution width */
+            height: 720px; /* Native resolution height (16:9 aspect ratio) */
+            transform-origin: center center;
+            transition: transform 0.2s ease-in-out;
+            display: flex;
+            flex-direction: column;
+        }
+        /* Slide layout */
+        main {
+            flex-grow: 1; /* Allows main content to fill space */
+            position: relative;
+        }
+        .slide-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        .slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.7s ease-in-out;
+            position: absolute;
+            padding: 2.5rem;
+            align-items: center;
+            justify-content: center; /* Vertically centers content in the slide */
+            flex-direction: column;
+        }
+        .slide.active {
+            display: flex;
+            opacity: 1;
+        }
+        /* Theming and component styles */
+        .gradient-text {
+            background: linear-gradient(to right, var(--color-purple-light), var(--color-purple-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gradient-text-red {
+            background: linear-gradient(to right, #f87171, #dc2626);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .card {
+            background-color: var(--color-card);
+            border: 1px solid var(--color-border);
+            border-radius: 1rem;
+            padding: 2rem;
+            height: 100%;
+        }
+        .primary-button {
+            background: linear-gradient(to right, var(--color-purple-light), var(--color-purple-dark));
+            color: var(--color-text-primary);
+        }
+        .primary-button:hover {
+            opacity: 0.9;
+        }
+        .secondary-button {
+            background-color: var(--color-card);
+            border: 1px solid var(--color-border);
+            color: var(--color-text-primary);
+        }
+        .secondary-button:hover {
+            background-color: var(--color-border);
+        }
+        /* Custom Utility Classes for CSS Variables */
+        .bg-surface { background-color: var(--color-surface); }
+        .border-border { border-color: var(--color-border); }
+        .text-text-primary { color: var(--color-text-primary); }
+        .text-text-secondary { color: var(--color-text-secondary); }
+        .text-color-purple-light { color: var(--color-purple-light); }
+        .border-color-purple-light { border-color: var(--color-purple-light); }
+        .bg-color-purple-light { background-color: var(--color-purple-light); }
+        .text-color-bg { color: var(--color-bg); }
+    </style>
+</head>
+<body>
+
+    <div id="presentation-wrapper">
+        <div id="presentation-container" class="bg-surface rounded-2xl shadow-2xl overflow-hidden border border-border">
+            <main class="p-4 sm:p-6 md:p-8">
+                <div id="slide-container" class="slide-container">
+                    <!-- Slide 1: Cover / Introduction -->
+                    <div id="slide-1" class="slide active text-center">
+                        <h1 class="text-5xl md:text-7xl font-black gradient-text tracking-tight">WiseOne</h1>
+                        <h2 class="mt-4 text-2xl md:text-3xl font-bold text-text-primary">The Premier Influencer Audit & Performance Platform</h2>
+                        <p class="mt-6 text-lg md:text-xl text-text-secondary">Stop Guessing. Start Knowing. We replace vanity metrics with verifiable proof of impact.</p>
+                    </div>
+
+                    <!-- Slide 2: Problem -->
+                    <div id="slide-2" class="slide">
+                        <h2 class="text-3xl md:text-5xl font-bold text-center mb-10">The Problem: <span class="gradient-text-red">Chaos</span> in KOL Marketing</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl">
+                            <div class="card text-center flex flex-col items-center">
+                                <svg class="w-16 h-16 mb-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"></path></svg>
+                                <h3 class="text-xl font-bold mb-2">The Fear of Fraud</h3>
+                                <p class="text-text-secondary">Budgets are wasted on ghost followers and botted engagement, making true ROI impossible to measure.</p>
+                            </div>
+                            <div class="card text-center flex flex-col items-center">
+                                <svg class="w-16 h-16 mb-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"></path></svg>
+                                <h3 class="text-xl font-bold mb-2">The Risk of Ruin</h3>
+                                <p class="text-text-secondary">Partnering with the wrong influencer can destroy brand reputation and investor confidence overnight.</p>
+                            </div>
+                            <div class="card text-center flex flex-col items-center">
+                                <svg class="w-16 h-16 mb-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <h3 class="text-xl font-bold mb-2">The Danger of Deception</h3>
+                                <p class="text-text-secondary">Without verifiable data, marketing performance is a black box, eroding stakeholder trust.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 3: Solution -->
+                    <div id="slide-3" class="slide">
+                        <h2 class="text-3xl md:text-5xl font-bold text-center mb-10">The Solution: <span class="gradient-text">Real Impact Verification</span></h2>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl">
+                            <div class="card text-center flex flex-col items-center">
+                                <svg class="w-16 h-16 mb-4 text-color-purple-light" viewBox="0 0 32 32" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="16" cy="16" r="2.5"></circle><circle cx="16" cy="6" r="2"></circle><circle cx="16" cy="26" r="2"></circle><circle cx="6" cy="16" r="2"></circle><circle cx="26" cy="16" r="2"></circle><circle cx="9.9" cy="9.9" r="2"></circle><circle cx="22.1" cy="22.1" r="2"></circle><circle cx="9.9" cy="22.1" r="2"></circle><circle cx="22.1" cy="9.9" r="2"></circle>
+                                </svg>
+                                <h3 class="text-xl font-bold mb-2">Audited Insights</h3>
+                                <p class="text-text-secondary">Our proprietary engine, powered by koat.ai, verifies engagement and detects bots to reveal true influencer impact.</p>
+                            </div>
+                            <div class="card text-center flex flex-col items-center">
+                                <svg class="w-16 h-16 mb-4 text-color-purple-light" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                                <h3 class="text-xl font-bold mb-2">Actionable Data</h3>
+                                <p class="text-text-secondary">We replace vanity metrics with verifiable ROI data, enabling confident, data-driven marketing decisions.</p>
+                            </div>
+                            <div class="card text-center flex flex-col items-center">
+                               <svg class="w-16 h-16 mb-4 text-color-purple-light" viewBox="0 0 50 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M26.3158 31.9167C26.3158 32.5481 25.9195 33.3958 25.2105 33.75L12.1053 41.25C11.0526 41.875 9.63158 41.0278 9.63158 39.7917V24.5C9.63158 23.8681 10.0278 23.0208 10.7368 22.6667L23.8421 15.1667C24.8947 14.5417 26.3158 15.3889 26.3158 16.625V31.9167Z" stroke="currentColor" stroke-width="3"></path>
+                                    <path d="M40.3684 22.6667L27.2632 15.1667C26.2105 14.5417 24.7895 15.3889 24.7895 16.625V31.9167C24.7895 32.5481 25.1857 33.3958 25.8947 33.75L38.9999 41.25C40.0526 41.875 41.4737 41.0278 41.4737 39.7917V24.5C41.4737 23.8681 41.0774 23.0208 40.3684 22.6667Z" stroke="currentColor" stroke-width="3"></path>
+                                    <path d="M33.3421 3.75L20.2368 11.25C19.1842 11.875 19.1842 13.375 20.2368 14L33.3421 21.5C34.3947 22.125 35.8158 21.2778 35.8158 20.0417V5.16667C35.8158 3.93056 34.3947 3.125 33.3421 3.75Z" stroke="currentColor" stroke-width="3"></path>
+                                </svg>
+                                <h3 class="text-xl font-bold mb-2">Trust Ecosystem</h3>
+                                <p class="text-text-secondary">We're building a secure marketplace where brands and vetted KOLs can collaborate with confidence.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 4: Market Opportunity -->
+                    <div id="slide-4" class="slide">
+                        <h2 class="text-3xl md:text-5xl font-bold text-center mb-10">A Multi-Billion Dollar <span class="gradient-text">Market Opportunity</span></h2>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl">
+                            <div class="card p-6 text-center">
+                                <p class="text-lg text-text-secondary">Total Addressable Market (TAM)</p>
+                                <p class="text-5xl font-bold text-color-purple-light my-2">$24 Billion</p>
+                                <p class="text-md text-text-secondary">Global Influencer Marketing Spend</p>
+                            </div>
+                            <div class="card p-6 text-center">
+                                <p class="text-lg text-text-secondary">Serviceable Addressable Market (SAM)</p>
+                                <p class="text-5xl font-bold text-color-purple-light my-2">$1.5 Billion</p>
+                                <p class="text-md text-text-secondary">Crypto & Web3 Influencer Spend</p>
+                            </div>
+                            <div class="card p-6 text-center">
+                                <p class="text-lg text-text-secondary">Serviceable Obtainable Market (SOM)</p>
+                                <p class="text-5xl font-bold text-color-purple-light my-2">$15 Million</p>
+                                <p class="text-md text-text-secondary">Year 3 Target Revenue</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 5: Product (How We Do It) -->
+                    <div id="slide-5" class="slide">
+                        <h2 class="text-3xl md:text-4xl font-bold text-center mb-2">Our Product: <span class="gradient-text">The Data Pipeline</span></h2>
+                        <p class="text-center text-md text-text-secondary mb-6 max-w-4xl">Our advantage comes from a proprietary data engine that transforms chaotic online chatter into verifiable intelligence.</p>
+                        <div class="grid grid-cols-5 gap-4 max-w-7xl">
+                            <div class="card text-center flex flex-col items-center p-4">
+                                <svg class="w-12 h-12 mb-2 text-color-purple-light" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <h3 class="text-lg font-bold mb-1">1. Partnership</h3>
+                                <p class="text-sm text-text-secondary">Exclusive access to real-time crypto data and over 1B historical data points via koat.ai.</p>
+                            </div>
+                            <div class="card text-center flex flex-col items-center p-4">
+                                <svg class="w-12 h-12 mb-2 text-color-purple-light" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg>
+                                <h3 class="text-lg font-bold mb-1">2. Ingestion</h3>
+                                <p class="text-sm text-text-secondary">Ingesting millions of data points daily from Twitter, Reddit, YouTube, and 20k+ news outlets.</p>
+                            </div>
+                            <div class="card text-center flex flex-col items-center p-4">
+                                <svg class="w-12 h-12 mb-2 text-color-purple-light" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1v-2zM3 16a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1v-2z"></path></svg>
+                                <h3 class="text-lg font-bold mb-1">3. Filtering</h3>
+                                <p class="text-sm text-text-secondary">Advanced bot-detection filters out automated activity, ensuring authentic, human-driven data.</p>
+                            </div>
+                            <div class="card text-center flex flex-col items-center p-4">
+                                <svg class="w-12 h-12 mb-2 text-color-purple-light" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                                <h3 class="text-lg font-bold mb-1">4. Enrichment</h3>
+                                <p class="text-sm text-text-secondary">Data is enriched with sentiment, emotion, and topic modeling to quantify the conversation.</p>
+                            </div>
+                             <div class="card text-center flex flex-col items-center p-4">
+                                <svg class="w-12 h-12 mb-2 text-color-purple-light" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <h3 class="text-lg font-bold mb-1">5. Delivery</h3>
+                                <p class="text-sm text-text-secondary">Anomaly detection scans for manipulation before delivering clean, trusted insights to our clients.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Slide 6: Product (Why WiseOne?) -->
+                    <div id="slide-6" class="slide">
+                         <h2 class="text-3xl md:text-5xl font-bold text-center mb-12">Why <span class="gradient-text">WiseOne</span>?</h2>
+                         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl">
+                            <div class="card p-6 flex flex-col">
+                                <h3 class="text-2xl font-bold gradient-text mb-4">1. Unrivaled Data Integrity</h3>
+                                <p class="text-text-secondary flex-grow">We deliver forensic-grade intelligence, replacing ambiguous metrics with unassailable proof of performance. Make decisions with the highest degree of confidence.</p>
+                            </div>
+                            <div class="card p-6 flex flex-col">
+                                <h3 class="text-2xl font-bold gradient-text mb-4">2. Strategic Investment & ROI</h3>
+                                <p class="text-text-secondary flex-grow">Protect your marketing budget from fraud and misallocation. Our insights empower you to cut losing strategies and double down on what drives real, measurable ROI.</p>
+                            </div>
+                            <div class="card p-6 flex flex-col">
+                                <h3 class="text-2xl font-bold gradient-text mb-4">3. Elite Market Intelligence</h3>
+                                <p class="text-text-secondary flex-grow">While others rely on surface-level data, you gain access to a deeper layer of market intelligence. Outmaneuver competitors with insights they simply can't get.</p>
+                            </div>
+                            <div class="card p-6 flex flex-col">
+                                <h3 class="text-2xl font-bold gradient-text mb-4">4. The Gold Standard of Trust</h3>
+                                <p class="text-text-secondary flex-grow">Our data is the trusted benchmark for top-tier funds, exchanges, and projects. Operate with the assurance that your intelligence is audited, verified, and globally recognized.</p>
+                            </div>
+                         </div>
+                    </div>
+
+                    <!-- Slide 7: Traction / Validation -->
+                    <div id="slide-7" class="slide">
+                        <h2 class="text-3xl md:text-5xl font-bold text-center mb-8">Traction & <span class="gradient-text">Validation</span></h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl">
+                            <div class="card p-6">
+                                <h3 class="text-2xl font-bold text-text-primary mb-4">Early Traction</h3>
+                                <ul class="space-y-4 text-text-secondary text-lg">
+                                    <li class="flex items-start"><span class="text-color-purple-light font-bold mr-3">&rarr;</span><span><strong class="text-text-primary">[Number]</strong> pilot programs with leading Web3 brands, including BitLayer Labs.</span></li>
+                                    <li class="flex items-start"><span class="text-color-purple-light font-bold mr-3">&rarr;</span><span><strong class="text-text-primary">[$$$]</strong> in initial revenue generated from one-off reports.</span></li>
+                                    <li class="flex items-start"><span class="text-color-purple-light font-bold mr-3">&rarr;</span><span>Strong interest from <strong class="text-text-primary">[Number]</strong> agencies for our subscription tiers post-launch.</span></li>
+                                </ul>
+                            </div>
+                            <div class="card flex flex-col justify-center p-8 bg-surface">
+                                <blockquote class="text-xl text-text-secondary italic mb-6 flex-grow">
+                                    "The only platform that gave us true, actionable data on influencer performance."
+                                </blockquote>
+                                <cite class="font-bold text-text-primary not-italic text-right">- Agency Client</cite>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Slide 8: Business Model -->
+                    <div id="slide-8" class="slide">
+                        <h2 class="text-3xl md:text-5xl font-bold text-center mb-8">Our Business Model: <span class="gradient-text">A Defensible Flywheel</span></h2>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-7xl">
+                            <div class="card p-6 flex flex-col items-center text-center">
+                                <h3 class="text-xl font-bold text-text-primary mb-4">1. Attract Brands & Agencies</h3>
+                                <p class="text-text-secondary text-sm">Offer unparalleled, audited data for campaign measurement and KOL discovery. This generates our initial SaaS revenue.</p>
+                            </div>
+                            <div class="card p-6 flex flex-col items-center text-center">
+                                <h3 class="text-xl font-bold text-text-primary mb-4">2. Onboard Vetted KOLs</h3>
+                                <p class="text-text-secondary text-sm">Top-performing KOLs from successful campaigns are invited to our platform. They gain a "WiseOne Verified" status to prove their value.</p>
+                            </div>
+                            <div class="card p-6 flex flex-col items-center text-center">
+                                <h3 class="text-xl font-bold text-text-primary mb-4">3. Create a Trusted Marketplace</h3>
+                                <p class="text-text-secondary text-sm">Brands can now confidently hire from a pool of verified, high-impact KOLs, creating a powerful network effect and a new revenue stream (marketplace fees).</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 9: Go-to-Market Strategy -->
+                    <div id="slide-9" class="slide">
+                        <h2 class="text-3xl md:text-5xl font-bold text-center mb-8">Go-to-Market <span class="gradient-text">Strategy</span></h2>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl">
+                            <div class="card p-6">
+                                <h3 class="text-2xl font-bold text-text-primary mb-4">Direct Sales</h3>
+                                <p class="text-text-secondary">Target Web3 marketing agencies and crypto projects with a clear need for ROI verification and fraud detection.</p>
+                            </div>
+                            <div class="card p-6">
+                                <h3 class="text-2xl font-bold text-text-primary mb-4">Strategic Partnerships</h3>
+                                <p class="text-text-secondary">Collaborate with launchpads, VCs, and exchanges who need to vet projects and their marketing efforts.</p>
+                            </div>
+                             <div class="card p-6">
+                                <h3 class="text-2xl font-bold text-text-primary mb-4">Content Marketing</h3>
+                                <p class="text-text-secondary">Publish data-driven reports on industry trends to establish thought leadership and generate inbound leads.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 10: Competitive Landscape -->
+                    <div id="slide-10" class="slide">
+                        <h2 class="text-3xl md:text-5xl font-bold text-center mb-10">Competitive <span class="gradient-text">Landscape</span></h2>
+                        <div class="w-full max-w-6xl">
+                            <div class="grid grid-cols-4 text-center text-sm font-bold border-b border-border pb-2 mb-4">
+                                <div></div>
+                                <div class="text-text-primary">WiseOne</div>
+                                <div class="text-text-secondary">Legacy Platforms</div>
+                                <div class="text-text-secondary">Basic Analytics Tools</div>
+                            </div>
+                            <div class="grid grid-cols-4 text-center text-sm items-center border-b border-border py-3">
+                                <div class="text-left font-bold text-text-primary">Data Source</div>
+                                <div class="text-green-400 font-semibold">Proprietary & Audited</div>
+                                <div class="text-yellow-400">Public APIs</div>
+                                <div class="text-red-400">Public APIs</div>
+                            </div>
+                            <div class="grid grid-cols-4 text-center text-sm items-center border-b border-border py-3">
+                                <div class="text-left font-bold text-text-primary">Bot & Fraud Detection</div>
+                                <div class="text-green-400 font-semibold">Advanced</div>
+                                <div class="text-yellow-400">Limited</div>
+                                <div class="text-red-400">None</div>
+                            </div>
+                            <div class="grid grid-cols-4 text-center text-sm items-center border-b border-border py-3">
+                                <div class="text-left font-bold text-text-primary">Web3 Native</div>
+                                <div class="text-green-400 font-semibold">Yes</div>
+                                <div class="text-red-400">No</div>
+                                <div class="text-yellow-400">Partial</div>
+                            </div>
+                            <div class="grid grid-cols-4 text-center text-sm items-center py-3">
+                                <div class="text-left font-bold text-text-primary">Pricing Model</div>
+                                <div class="text-green-400 font-semibold">Value-Based Tiers</div>
+                                <div class="text-red-400">High Enterprise Contracts</div>
+                                <div class="text-yellow-400">Low-Cost SaaS</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 11: Team -->
+                    <div id="slide-11" class="slide">
+                        <h2 class="text-3xl md:text-5xl font-bold text-center mb-10">Meet the <span class="gradient-text">Founding Team</span></h2>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl">
+                            <div class="card text-center flex flex-col items-center p-6">
+                                <img src="https://placehold.co/128x128/1A1823/C879FF?text=Founder" class="w-32 h-32 rounded-full mb-4 border-2 border-color-purple-light" alt="Founder 1">
+                                <h3 class="text-xl font-bold text-text-primary">Founder Name</h3>
+                                <p class="text-md text-color-purple-light mb-2">CEO & Co-Founder</p>
+                                <p class="text-sm text-text-secondary">Serial entrepreneur with 10+ years in data analytics. Co-Founder of koat.ai, the engine powering WiseOne.</p>
+                            </div>
+                            <div class="card text-center flex flex-col items-center p-6">
+                                <img src="https://placehold.co/128x128/1A1823/C879FF?text=Founder" class="w-32 h-32 rounded-full mb-4 border-2 border-color-purple-light" alt="Founder 2">
+                                <h3 class="text-xl font-bold text-text-primary">Founder Name</h3>
+                                <p class="text-md text-color-purple-light mb-2">CTO & Co-Founder</p>
+                                <p class="text-sm text-text-secondary">Lead architect of the koat.ai data pipeline. Expert in machine learning and large-scale data systems.</p>
+                            </div>
+                            <div class="card text-center flex flex-col items-center p-6">
+                                <img src="https://placehold.co/128x128/1A1823/C879FF?text=Founder" class="w-32 h-32 rounded-full mb-4 border-2 border-color-purple-light" alt="Founder 3">
+                                <h3 class="text-xl font-bold text-text-primary">Founder Name</h3>
+                                <p class="text-md text-color-purple-light mb-2">Head of Product</p>
+                                <p class="text-sm text-text-secondary">Experienced product leader from top Web3 marketing agencies. Deep understanding of customer pain points.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 12: Financials / Projections -->
+                    <div id="slide-12" class="slide">
+                        <h2 class="text-3xl md:text-5xl font-bold text-center mb-10">Financial <span class="gradient-text">Projections</span></h2>
+                        <div class="w-full max-w-4xl bg-card p-6 rounded-lg border border-border">
+                            <table class="w-full text-left">
+                                <thead>
+                                    <tr class="border-b border-border">
+                                        <th class="p-3 text-lg text-text-primary">Metric</th>
+                                        <th class="p-3 text-lg text-text-primary text-center">Year 1</th>
+                                        <th class="p-3 text-lg text-text-primary text-center">Year 2</th>
+                                        <th class="p-3 text-lg text-text-primary text-center">Year 3</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="border-b border-border">
+                                        <td class="p-3 text-text-secondary">Revenue</td>
+                                        <td class="p-3 text-2xl font-bold text-center text-color-purple-light">$500K</td>
+                                        <td class="p-3 text-2xl font-bold text-center text-color-purple-light">$4M</td>
+                                        <td class="p-3 text-2xl font-bold text-center text-color-purple-light">$15M</td>
+                                    </tr>
+                                    <tr class="border-b border-border">
+                                        <td class="p-3 text-text-secondary">Paying Customers</td>
+                                        <td class="p-3 text-2xl font-bold text-center text-color-purple-light">50</td>
+                                        <td class="p-3 text-2xl font-bold text-center text-color-purple-light">200</td>
+                                        <td class="p-3 text-2xl font-bold text-center text-color-purple-light">500+</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-3 text-text-secondary">Gross Margin</td>
+                                        <td class="p-3 text-2xl font-bold text-center text-color-purple-light">75%</td>
+                                        <td class="p-3 text-2xl font-bold text-center text-color-purple-light">80%</td>
+                                        <td class="p-3 text-2xl font-bold text-center text-color-purple-light">85%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Slide 13: Closing / Ask -->
+                    <div id="slide-13" class="slide text-center">
+                        <h2 class="text-5xl md:text-7xl font-black gradient-text tracking-tight mb-6">Join Us in Building the Future of Trusted Marketing</h2>
+                        <div class="card p-8 border-2 border-color-purple-light max-w-3xl">
+                             <p class="text-2xl text-text-secondary">We are raising a <span class="font-bold text-text-primary">Pre-Seed Round</span> of</p>
+                             <p class="text-7xl font-bold gradient-text my-4">$200,000</p>
+                             <p class="text-2xl text-text-secondary">at a <span class="font-bold text-text-primary">$1M Valuation</span> (SAFE + Token Warrants)</p>
+                        </div>
+                    </div>
+
+                </div>
+            </main>
+            <!-- Navigation -->
+            <footer class="flex justify-between items-center p-4 bg-surface border-t border-border">
+                <button id="prevBtn" class="secondary-button font-bold py-2 px-5 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                    Previous
+                </button>
+                <div id="slide-indicator" class="text-text-secondary text-sm font-medium"></div>
+                <button id="nextBtn" class="primary-button font-bold py-2 px-5 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                    Next
+                </button>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- PRESENTATION SCALING ---
+            const presentationContainer = document.getElementById('presentation-container');
+            const nativeWidth = 1280;
+            const nativeHeight = 720;
+
+            function scalePresentation() {
+                const viewportWidth = window.innerWidth;
+                const viewportHeight = window.innerHeight;
+
+                const scale = Math.min(viewportWidth / nativeWidth, viewportHeight / nativeHeight);
+                
+                if (presentationContainer) {
+                   presentationContainer.style.transform = `scale(${scale})`;
+                }
+            }
+
+            // --- SLIDE NAVIGATION ---
+            const slides = document.querySelectorAll('.slide');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const slideIndicator = document.getElementById('slide-indicator');
+            let currentSlide = 0;
+            const totalSlides = slides.length;
+
+            function showSlide(index) {
+                slides.forEach((slide) => {
+                    slide.classList.remove('active');
+                });
+                if (slides[index]) {
+                    slides[index].classList.add('active');
+                }
+                if (slideIndicator) {
+                    slideIndicator.textContent = `Slide ${index + 1} of ${totalSlides}`;
+                }
+                if (prevBtn) {
+                    prevBtn.disabled = index === 0;
+                }
+                if (nextBtn) {
+                    nextBtn.disabled = index === totalSlides - 1;
+                }
+            }
+
+            if (nextBtn) {
+                nextBtn.addEventListener('click', () => {
+                    if (currentSlide < totalSlides - 1) {
+                        currentSlide++;
+                        showSlide(currentSlide);
+                    }
+                });
+            }
+
+            if (prevBtn) {
+                prevBtn.addEventListener('click', () => {
+                    if (currentSlide > 0) {
+                        currentSlide--;
+                        showSlide(currentSlide);
+                    }
+                });
+            }
+            
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight') {
+                    nextBtn && nextBtn.click();
+                } else if (e.key === 'ArrowLeft') {
+                    prevBtn && prevBtn.click();
+                }
+            });
+
+            // Initial and on-resize scaling
+            scalePresentation();
+            window.addEventListener('resize', scalePresentation);
+            showSlide(currentSlide);
+        });
+    </script>
+</body>
+</html>
